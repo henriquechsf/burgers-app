@@ -23,5 +23,5 @@ fun Float?.formattedValue(removeSymbol: Boolean = false): String {
         moneyFormatter.format(this)
     }
 
-    return if (removeSymbol) value.replace("R\$ ", "") else value
+    return if (removeSymbol) value.replace("R\$ ", "") else value
 }
