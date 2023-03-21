@@ -28,7 +28,7 @@ class BurgersAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val burger = burgers[position]
 
-        holder.binding.textName.text = burger.name
+        holder.binding.textBurgerName.text = burger.name
         holder.binding.textDescription.text = burger.desc
         holder.binding.textPrice.text = burger.price?.formattedValue()
 

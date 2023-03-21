@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.burgershub.databinding.FragmentDetailsBinding
 import com.example.burgershub.domain.model.Burger
+import com.example.burgershub.domain.model.Ingredient
 import com.example.burgershub.util.StateView
 import com.example.burgershub.util.formattedValue
 import com.squareup.picasso.Picasso
@@ -23,6 +25,7 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DetailsViewModel by viewModels()
+    private val ingredientsAdapter by lazy { IngredientsAdapter() }
 
     private val args: DetailsFragmentArgs by navArgs()
 
@@ -55,7 +58,10 @@ class DetailsFragment : Fragment() {
 
                 }
                 is StateView.Success -> {
-                    stateView.data?.let { configData(it) }
+                    stateView.data?.let {
+                        ingredientsAdapter.ingredients = it.ingredients as List<Ingredient>
+                        configData(it)
+                    }
                 }
                 is StateView.Error -> {
                     Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
@@ -73,6 +79,16 @@ class DetailsFragment : Fragment() {
         binding.textBurger.text = burger.name
         binding.textDescription.text = burger.desc
         binding.textBurgerPrice.text = burger.price?.formattedValue()
+
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() = with(binding) {
+        rvIngredients.apply {
+            adapter = ingredientsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+        }
     }
 
     override fun onDestroyView() {
