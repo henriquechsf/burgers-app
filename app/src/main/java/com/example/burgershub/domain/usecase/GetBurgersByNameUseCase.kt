@@ -10,5 +10,6 @@ class GetBurgersByNameUseCase @Inject constructor(
 
     suspend operator fun invoke(name: String): List<Burger> {
         return burgerRepository.getBurgerByName(name)
+            .filter { it.name?.contains(name, ignoreCase = true) == true }
     }
 }
