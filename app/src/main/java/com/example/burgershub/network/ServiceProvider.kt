@@ -1,15 +1,25 @@
 package com.example.burgershub.network
 
+import android.content.Context
+import io.github.brunogabriel.mockpinterceptor.MockPInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ServiceProvider {
+class ServiceProvider @Inject constructor(
+    context: Context
+) {
 
     private val baseUrl = "https://burgers-hub.p.rapidapi.com/"
+
+    val mockInterceptor = MockPInterceptor
+        .Builder(context)
+        .addDelayInMillis(1_000L, 1_000L)
+        .build()
 
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -30,6 +40,7 @@ class ServiceProvider {
                 )
             }
         })
+        .addInterceptor(mockInterceptor)
         .build()
 
     private val retrofit = Retrofit.Builder()
