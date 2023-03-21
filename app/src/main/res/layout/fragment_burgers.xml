@@ -6,16 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".presenter.burgers.BurgersFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:background="@drawable/bg_edit_search"
+        android:drawableStart="@drawable/ic_search_line"
+        android:drawableTint="@color/gray_400"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="Item ou loja" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_burgers"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/burger_item"
-        tools:itemCount="3"/>
+        app:layout_constraintTop_toBottomOf="@+id/search_view"
+        tools:itemCount="3"
+        tools:listitem="@layout/burger_item" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
